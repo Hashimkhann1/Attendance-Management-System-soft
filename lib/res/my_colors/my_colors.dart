@@ -8,6 +8,8 @@ class MyColors {
 
   static const whiteColor = Colors.white;
   static const grayColor = Colors.grey;
-  static final lightgrayColor = Colors.grey.shade600;
+  static const blackColor = Colors.black;
+  static final midLightgrayColor = Colors.grey.shade600;
+  static final lightgrayColor = Color(0xFFBDBDBD);
 
 }
