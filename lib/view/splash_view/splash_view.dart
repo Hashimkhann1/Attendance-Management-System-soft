@@ -17,7 +17,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     // TODO: implement initState
-    splashViewMode.splashTime();
+    splashViewMode.splashTime(context);
     super.initState();
   }
 
@@ -32,9 +32,9 @@ class _SplashViewState extends State<SplashView> {
             Icon(
             Icons.check_circle_outline,
             size: 100,
-            color: MyColors.lightgrayColor,
+            color: MyColors.midLightgrayColor,
                       ),
-            MyTextWidget(title: "Attendnace Managment System",fontSize: 16,fontWeight: FontWeight.w500,)
+            MyText(title: "Attendnace Managment System",fontSize: 16,fontWeight: FontWeight.w500,)
           ],
         )),
       ),
