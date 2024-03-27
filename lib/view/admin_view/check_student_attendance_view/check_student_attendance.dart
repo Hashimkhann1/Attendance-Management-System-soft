@@ -1,10 +1,10 @@
 import 'package:attendancemanagementsystem/res/my_colors/my_colors.dart';
 import 'package:attendancemanagementsystem/res/widgets/my_text.dart';
-import 'package:attendancemanagementsystem/view/admin_view/check_student_attendance/student_attendance_graph/student_attendance_graph.dart';
+import 'package:attendancemanagementsystem/view/admin_view/check_student_attendance_view/student_attendance_graph/student_attendance_graph.dart';
 import 'package:flutter/material.dart';
 
-class CheckStudentAttendance extends StatelessWidget {
-  const CheckStudentAttendance({super.key});
+class CheckStudentAttendanceView extends StatelessWidget {
+  const CheckStudentAttendanceView({super.key});
 
   @override
   Widget build(BuildContext context) {
