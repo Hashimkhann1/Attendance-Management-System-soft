@@ -41,7 +41,7 @@ class MyTextButton extends StatelessWidget {
             color: backgroundColor,
             borderRadius: BorderRadius.circular(8)
         ),
-        child: loading ? CircularProgressIndicator(color: MyColors.blackColor,) : MyText(
+        child: loading ? CircularProgressIndicator(color: MyColors.whiteColor,) : MyText(
           title: title,
           fontSize: fontSize,
           fontWeight: fontWeight,
