@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MyTextWidget extends StatelessWidget {
+class MyText extends StatelessWidget {
   final String title;
   final Color? color;
   final double? fontSize;
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
 
-  const MyTextWidget(
+  const MyText(
       {super.key,
       required this.title,
       this.color,
