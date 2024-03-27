@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class MyTextFormField extends StatelessWidget {
   final String? hintText;
-  final Color? color;
+  final Color? hintTextColor;
+  final Color? textColor;
   final double? fontSize;
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
@@ -19,7 +20,8 @@ class MyTextFormField extends StatelessWidget {
   const MyTextFormField(
       {super.key,
       required this.hintText,
-      this.color,
+      this.hintTextColor,
+      this.textColor,
       this.fontSize,
       this.fontWeight,
       this.textAlign,
@@ -38,10 +40,11 @@ class MyTextFormField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
+      style: TextStyle(color: textColor),
       decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
-            color: color,
+            color: hintTextColor,
             fontSize: fontSize,
             fontWeight: fontWeight,
           ),
