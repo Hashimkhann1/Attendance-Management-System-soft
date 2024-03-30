@@ -11,8 +11,9 @@ import 'package:get/get.dart';
 
 class StudenAttendanceGraph extends StatelessWidget {
   final String? studentId;
+  final DateTime? userRegisterDate;
 
-  StudenAttendanceGraph({super.key, this.studentId});
+  StudenAttendanceGraph({super.key, this.studentId , required this.userRegisterDate});
 
   ////////// logedin user data list ////////////
   final LogedInUserDataGetx logedInUserDataGetx =
@@ -45,7 +46,8 @@ class StudenAttendanceGraph extends StatelessWidget {
               attendanceGraphViewModel.totalPresent.value.toInt();
           final totalLeave = attendanceGraphViewModel.totalLeave.value.toInt();
 
-          return Row(
+          return totalAttendance != 0
+              ? Row(
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,9 +78,7 @@ class StudenAttendanceGraph extends StatelessWidget {
                             width: width * 0.02,
                           ),
                           MyText(
-                            title: totalAttendance == 0
-                                ? "..."
-                                : totalAttendance.toString(),
+                            title: totalAttendance.toString(),
                             color: MyColors.whiteColor,
                             fontSize: 19,
                             fontWeight: FontWeight.bold,
@@ -97,9 +97,7 @@ class StudenAttendanceGraph extends StatelessWidget {
                             width: width * 0.02,
                           ),
                           MyText(
-                            title: totalPresent == 0
-                                ? "..."
-                                : totalPresent.toString(),
+                            title: totalPresent.toString(),
                             color: MyColors.whiteColor,
                             fontSize: 19,
                             fontWeight: FontWeight.bold,
@@ -118,8 +116,7 @@ class StudenAttendanceGraph extends StatelessWidget {
                             width: width * 0.02,
                           ),
                           MyText(
-                            title:
-                                totalLeave == 0 ? "..." : totalLeave.toString(),
+                            title: totalLeave.toString(),
                             color: MyColors.whiteColor,
                             fontSize: 19,
                             fontWeight: FontWeight.bold,
@@ -137,7 +134,9 @@ class StudenAttendanceGraph extends StatelessWidget {
                             MyTextButton(
                               title: "Add attendance",
                               fontWeight: FontWeight.bold,
-                              onPressed: () {},
+                              onPressed: () {
+                                attendanceViewModel.addAttendanceDatePicker(context , userRegisterDate! , studentId!);
+                              },
                               width: width * 0.32,
                               height: height * 0.04,
                               backgroundColor: MyColors.whiteColor,
@@ -161,8 +160,7 @@ class StudenAttendanceGraph extends StatelessWidget {
               ),
 
               /////////// chart code //////////
-              totalAttendance != 0
-                  ? Expanded(
+               Expanded(
                       child: PieChart(PieChartData(
                           sectionsSpace: 1,
                           centerSpaceRadius: 0,
@@ -196,12 +194,11 @@ class StudenAttendanceGraph extends StatelessWidget {
                                 radius: width * 0.20),
                           ])),
                     )
-                  : MyText(
-                      title: "Loading Graph...",
-                      fontSize: 16,
-                      color: MyColors.whiteColor,
-                    ),
             ],
+          ) : MyText(
+          title: "Loading Graph...",
+          fontSize: 16,
+          color: MyColors.whiteColor,
           );
         }));
   }
