@@ -32,58 +32,91 @@ class AllStudentsView extends StatelessWidget {
         elevation: 14,
       ),
       body: PopScope(
-        canPop: false,
-        onPopInvoked: (didPop) {
-          SystemNavigator.pop();
-        },
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('users').snapshots(),
-          builder: (context , snapshot) {
-            if(snapshot.hasError){
-              return Center(child: CircularProgressIndicator(color: Colors.red,));
-            }else if(snapshot.connectionState == ConnectionState.waiting){
-              return Center(child: CircularProgressIndicator(color: MyColors.whiteColor,));
-            }
-            return Column(
-              children: [
-                SizedBox(
-                  height: height * 0.04,
-                ),
-
-                //////////// Student name card //////////
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => CheckStudentAttendanceView(studentId: snapshot.data!.docs[index].id.toString(),)));
-                          },
-                          child: snapshot.data!.docs[index]['userEmail'].toString() == _auth.currentUser!.email.toString() ? SizedBox() : Container(
-                            width: width,
-                            margin: EdgeInsets.symmetric(vertical: 5),
-                            padding: EdgeInsets.symmetric(horizontal: 6,vertical: 10),
-                            decoration: BoxDecoration(
-                                color: MyColors.lightBlackColor,
-                                borderRadius: BorderRadius.circular(12)
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.school,color: MyColors.whiteColor,size: 44,),
-                                SizedBox(width: width * 0.05,),
-                                MyText(title: snapshot.data!.docs[index]['userName'].toString(),color: MyColors.whiteColor,fontWeight: FontWeight.bold,fontSize: 20,)
-                              ],
-                            ),
-                          ),
-                        );
-                      }
+          canPop: false,
+          onPopInvoked: (didPop) {
+            SystemNavigator.pop();
+          },
+          child: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('users').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: Colors.red,
+                ));
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: MyColors.whiteColor,
+                ));
+              }
+              return Column(
+                children: [
+                  SizedBox(
+                    height: height * 0.04,
                   ),
-                )
-              ],
-            );
 
-        },)
-      ),
+                  //////////// Student name card //////////
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                             onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CheckStudentAttendanceView(
+                                            studentId: snapshot
+                                                .data!.docs[index].id
+                                                .toString(),
+                                            userRegisterDate: snapshot.data!
+                                                .docs[index]['registerData']
+                                                .toDate(),
+                                          )));
+                            },
+                            child: snapshot.data!.docs[index]['userEmail']
+                                        .toString() ==
+                                    _auth.currentUser!.email.toString()
+                                ? SizedBox()
+                                : Container(
+                                    width: width,
+                                    margin: EdgeInsets.symmetric(vertical: 5),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 6, vertical: 10),
+                                    decoration: BoxDecoration(
+                                        color: MyColors.lightBlackColor,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.school,
+                                          color: MyColors.whiteColor,
+                                          size: 44,
+                                        ),
+                                        SizedBox(
+                                          width: width * 0.05,
+                                        ),
+                                        MyText(
+                                          title: snapshot
+                                              .data!.docs[index]['userName']
+                                              .toString(),
+                                          color: MyColors.whiteColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                          );
+                        }),
+                  )
+                ],
+              );
+            },
+          )),
     );
   }
 }
