@@ -13,7 +13,6 @@ class EditAttendanceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(studentId);
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
