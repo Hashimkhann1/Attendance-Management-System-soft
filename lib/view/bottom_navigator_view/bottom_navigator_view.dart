@@ -1,6 +1,7 @@
 import 'package:attendancemanagementsystem/res/my_colors/my_colors.dart';
 import 'package:attendancemanagementsystem/res/widgets/my_text.dart';
 import 'package:attendancemanagementsystem/view/admin_view/all_students_view/all_students_view.dart';
+import 'package:attendancemanagementsystem/view/admin_view/leave_approval_view/leave_approval_view.dart';
 import 'package:attendancemanagementsystem/view/profile_view/profile_view.dart';
 import 'package:attendancemanagementsystem/view/student_view/student_attandance_view/student_attandance_view.dart';
 import 'package:attendancemanagementsystem/view_model/getx/logedIn_user_data_getx/logedIn_user_data.dart';
@@ -24,7 +25,7 @@ class _BottomNavigatorViewState extends State<BottomNavigatorView> {
   /////// admin views list /////////
   final List adminViews = [
     AllStudentsView(),
-    ProfileView(),
+    LeaveApprovalView(),
     ProfileView(),
   ];
 
