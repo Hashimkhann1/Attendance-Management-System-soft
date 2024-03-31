@@ -1,6 +1,7 @@
 import 'package:attendancemanagementsystem/res/my_colors/my_colors.dart';
 import 'package:attendancemanagementsystem/res/widgets/my_text.dart';
 import 'package:attendancemanagementsystem/view/admin_view/check_student_attendance_view/student_attendance_graph/student_attendance_graph.dart';
+import 'package:attendancemanagementsystem/view/admin_view/make_report_view/make_report_view.dart';
 import 'package:attendancemanagementsystem/view_model/attendance_view_model/attendance_graph_View_model/attendance_graph_View_model.dart';
 import 'package:attendancemanagementsystem/view_model/attendance_view_model/attendance_view_model.dart';
 import 'package:attendancemanagementsystem/view_model/getx/logedIn_user_data_getx/logedIn_user_data.dart';
@@ -106,7 +107,7 @@ class _CheckStudentAttendanceViewState extends State<CheckStudentAttendanceView>
                                     children: [
                                       logedInUserDataGetx.userDataList[0].userType != 'admin' ? SizedBox() : InkWell(
                                         onTap: (){
-                                          attendanceViewModel.deleteAttendance(context, widget.studentId, snapshot.data!.docs[index].id.toString());
+                                          attendanceViewModel.showDeleteAttendanceDialog(context, widget.studentId, snapshot.data!.docs[index].id.toString());
                                         },
                                         child: Icon(
                                           Icons.delete,
@@ -137,10 +138,26 @@ class _CheckStudentAttendanceViewState extends State<CheckStudentAttendanceView>
                               ),
                             );
                           }),
-                    )
+                    ),
+                    Obx(() {
+                      return attendanceGraphViewModel.totalAttendance == 0 ? SizedBox() : InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => MakeReportView()));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 7,vertical: 7),
+                          decoration: BoxDecoration(
+                              color: MyColors.whiteColor,
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          child: MyText(title: "Make Report",fontSize: 16,fontWeight: FontWeight.w600,),
+                        ),
+                      );
+                    })
                   ],
                 ),
               );
-            }));
+            }),
+    );
   }
 }
