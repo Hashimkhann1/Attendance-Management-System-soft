@@ -13,7 +13,8 @@ class StudenAttendanceGraph extends StatelessWidget {
   final String? studentId;
   final DateTime? userRegisterDate;
 
-  StudenAttendanceGraph({super.key, this.studentId , required this.userRegisterDate});
+  StudenAttendanceGraph(
+      {super.key, this.studentId, required this.userRegisterDate});
 
   ////////// logedin user data list ////////////
   final LogedInUserDataGetx logedInUserDataGetx =
@@ -48,119 +49,186 @@ class StudenAttendanceGraph extends StatelessWidget {
 
           return totalAttendance != 0
               ? Row(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      logedInUserDataGetx.userDataList[0].userType == 'admin'
-                          ? const SizedBox()
-                          : MyText(
-                              title: attendanceViewModel
-                                          .isTodayAttendanceExist.value ==
-                                      'exist'
-                                  ? "Toady attendace is saved"
-                                  : "Toady attendace is not saved",
-                              color: MyColors.whiteColor,
-                            ),
-                      Row(
-                        children: [
-                          const MyText(
-                            title: "Total attendance",
-                            color: MyColors.whiteColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          SizedBox(
-                            width: width * 0.02,
-                          ),
-                          MyText(
-                            title: totalAttendance.toString(),
-                            color: MyColors.whiteColor,
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const MyText(
-                            title: "Total present",
-                            color: MyColors.whiteColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          SizedBox(
-                            width: width * 0.02,
-                          ),
-                          MyText(
-                            title: totalPresent.toString(),
-                            color: MyColors.whiteColor,
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const MyText(
-                            title: "Total leave",
-                            color: MyColors.whiteColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          SizedBox(
-                            width: width * 0.02,
-                          ),
-                          MyText(
-                            title: totalLeave.toString(),
-                            color: MyColors.whiteColor,
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                  ////////// edit and add attendance button for admin ////////
-                  logedInUserDataGetx.userDataList[0].userType != 'admin'
-                      ? const SizedBox()
-                      : Column(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            MyTextButton(
-                              title: "Add attendance",
-                              fontWeight: FontWeight.bold,
-                              onPressed: () {
-                                attendanceViewModel.addAttendanceDatePicker(context , userRegisterDate! , studentId!);
-                              },
-                              width: width * 0.32,
-                              height: height * 0.04,
-                              backgroundColor: MyColors.whiteColor,
+                            logedInUserDataGetx.userDataList[0].userType ==
+                                    'admin'
+                                ? const SizedBox()
+                                : MyText(
+                                    title: attendanceViewModel
+                                                .isTodayAttendanceExist.value ==
+                                            'exist'
+                                        ? "Toady attendace is saved"
+                                        : "Toady attendace is not saved",
+                                    color: MyColors.whiteColor,
+                                  ),
+                            Row(
+                              children: [
+                                const MyText(
+                                  title: "Total attendance",
+                                  color: MyColors.whiteColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                SizedBox(
+                                  width: width * 0.02,
+                                ),
+                                MyText(
+                                  title: totalAttendance.toString(),
+                                  color: MyColors.whiteColor,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: height * 0.01,
+                            Row(
+                              children: [
+                                const MyText(
+                                  title: "Total present",
+                                  color: MyColors.whiteColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                SizedBox(
+                                  width: width * 0.02,
+                                ),
+                                MyText(
+                                  title: totalPresent.toString(),
+                                  color: MyColors.whiteColor,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ],
                             ),
-                            MyTextButton(
-                              title: "Edit attendance",
-                              fontWeight: FontWeight.bold,
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => EditAttendanceView(studentId: studentId,)));
-                              },
-                              width: width * 0.32,
-                              height: height * 0.04,
-                              backgroundColor: MyColors.whiteColor,
+
+                            ///// total leaves
+                            Row(
+                              children: [
+                                const MyText(
+                                  title: "Total leave",
+                                  color: MyColors.whiteColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                SizedBox(
+                                  width: width * 0.02,
+                                ),
+                                MyText(
+                                  title: totalLeave.toString(),
+                                  color: MyColors.whiteColor,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ],
+                            ),
+
+                            ///// student grade of attndance
+                            Row(
+                              children: [
+                                const MyText(
+                                  title: "Grade",
+                                  color: MyColors.whiteColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                SizedBox(
+                                  width: width * 0.02,
+                                ),
+                                MyText(
+                                  title: (attendanceGraphViewModel
+                                                      .totalPresent.value
+                                                      .toInt() /
+                                                  attendanceGraphViewModel
+                                                      .totalAttendance.value
+                                                      .toInt() *
+                                                  100)
+                                              .roundToDouble()
+                                              .truncate() >=
+                                          75
+                                      ? "A"
+                                      : (attendanceGraphViewModel.totalPresent
+                                                              .value
+                                                              .toInt() /
+                                                          attendanceGraphViewModel
+                                                              .totalAttendance
+                                                              .value
+                                                              .toInt() *
+                                                          100)
+                                                      .roundToDouble()
+                                                      .truncate() >=
+                                                  35 &&
+                                              (attendanceGraphViewModel
+                                                              .totalPresent
+                                                              .value
+                                                              .toInt() /
+                                                          attendanceGraphViewModel
+                                                              .totalAttendance
+                                                              .value
+                                                              .toInt() *
+                                                          100)
+                                                      .roundToDouble()
+                                                      .truncate() <
+                                                  75
+                                          ? "B"
+                                          : "D",
+                                  color: MyColors.whiteColor,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ],
                             ),
                           ],
-                        )
-                ],
-              ),
+                        ),
 
-              /////////// chart code //////////
-               Expanded(
+                        ////////// edit and add attendance button for admin ////////
+                        logedInUserDataGetx.userDataList[0].userType != 'admin'
+                            ? const SizedBox()
+                            : Column(
+                                children: [
+                                  MyTextButton(
+                                    title: "Add attendance",
+                                    fontWeight: FontWeight.bold,
+                                    onPressed: () {
+                                      attendanceViewModel
+                                          .addAttendanceDatePicker(context,
+                                              userRegisterDate!, studentId!);
+                                    },
+                                    width: width * 0.32,
+                                    height: height * 0.04,
+                                    backgroundColor: MyColors.whiteColor,
+                                  ),
+                                  SizedBox(
+                                    height: height * 0.01,
+                                  ),
+                                  MyTextButton(
+                                    title: "Edit attendance",
+                                    fontWeight: FontWeight.bold,
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditAttendanceView(
+                                                    studentId: studentId,
+                                                  )));
+                                    },
+                                    width: width * 0.32,
+                                    height: height * 0.04,
+                                    backgroundColor: MyColors.whiteColor,
+                                  ),
+                                ],
+                              )
+                      ],
+                    ),
+
+                    /////////// chart code //////////
+                    Expanded(
                       child: PieChart(PieChartData(
                           sectionsSpace: 1,
                           centerSpaceRadius: 0,
@@ -194,12 +262,13 @@ class StudenAttendanceGraph extends StatelessWidget {
                                 radius: width * 0.20),
                           ])),
                     )
-            ],
-          ) : MyText(
-          title: "Loading Graph...",
-          fontSize: 16,
-          color: MyColors.whiteColor,
-          );
+                  ],
+                )
+              : MyText(
+                  title: "Loading Graph...",
+                  fontSize: 16,
+                  color: MyColors.whiteColor,
+                );
         }));
   }
 }
