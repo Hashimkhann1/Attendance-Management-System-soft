@@ -11,6 +11,9 @@ class AttendanceGraphViewModel extends GetxController {
   RxInt totalPresent = 0.obs;
   RxInt totalLeave = 0.obs;
 
+  RxList allAttendanceForRepot = [].obs;
+  RxList allAttendanceDates = [].obs;
+
   void setAttendanceValues(attandancevalues) {
     if(attandancevalues == 'present'){
       totalPresent.value++;
@@ -28,7 +31,11 @@ class AttendanceGraphViewModel extends GetxController {
 
       var attendanceData = await FirebaseFirestore.instance.collection('users').doc(userId).collection('attendance').get();
       if(attendanceData.docs.isNotEmpty){
+        allAttendanceDates.clear();
+        allAttendanceForRepot.clear();
         attendanceData.docs.forEach((element) {
+          allAttendanceDates.add(element.id.toString());
+          allAttendanceForRepot.add({element.id.toString() : element.data()['attendance']});
           setAttendanceValues(element.data()['attendance']);
         });
         totalAttendance.value = attendanceData.docs.length;
