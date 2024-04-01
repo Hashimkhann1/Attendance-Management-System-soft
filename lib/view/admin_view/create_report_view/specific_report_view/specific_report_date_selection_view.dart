@@ -2,16 +2,14 @@ import 'package:attendancemanagementsystem/res/constant/constant.dart';
 import 'package:attendancemanagementsystem/res/my_colors/my_colors.dart';
 import 'package:attendancemanagementsystem/res/widgets/my_text.dart';
 import 'package:attendancemanagementsystem/res/widgets/my_text_button.dart';
-import 'package:attendancemanagementsystem/res/widgets/my_textformfield.dart';
-import 'package:attendancemanagementsystem/view/admin_view/create_report_view/create_report_view.dart';
 import 'package:attendancemanagementsystem/view_model/attendance_view_model/attendance_graph_View_model/attendance_graph_View_model.dart';
 import 'package:attendancemanagementsystem/view_model/report_view_model/report_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SpecificReportView extends StatelessWidget {
-  SpecificReportView({super.key});
+class SpecificReportDateSelectionView extends StatelessWidget {
+  SpecificReportDateSelectionView({super.key});
 
   // final _formKey  = GlobalKey<FormState>();
   // final reportDescriptionController = TextEditingController();
@@ -62,7 +60,7 @@ class SpecificReportView extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.w600,
               onPressed: () {
-                reportViewModel.checkDatesForSpecificAttendance();
+                reportViewModel.checkDatesForSpecificAttendance(context);
               },
               backgroundColor: MyColors.lightBlackColor,
               width: width * 0.40,
