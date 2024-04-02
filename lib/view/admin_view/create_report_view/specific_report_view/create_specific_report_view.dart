@@ -8,7 +8,8 @@ class CreateSpecificReportView extends StatelessWidget {
   final int totalLeave;
   final int totalSpecificAttendance;
   final List specificReportList;
-  CreateSpecificReportView({super.key,required this.totalSpecificAttendance,required this.totalPresent , required this.totalLeave,required this.specificReportList});
+  final String? studentName;
+  CreateSpecificReportView({super.key,required this.totalSpecificAttendance,required this.totalPresent , required this.totalLeave,required this.specificReportList,this.studentName});
 
   final ReportViewModel reportViewModel = ReportViewModel();
 
@@ -24,8 +25,8 @@ class CreateSpecificReportView extends StatelessWidget {
       canDebug: false,
 
       build: (format) => reportViewModel.generateDocumentForSpecificReport(
-        context, format,totalSpecificAttendance , totalPresent , totalLeave , specificReportList
+        context, format,totalSpecificAttendance , totalPresent , totalLeave , specificReportList ,studentName.toString()
       ),
-    );;
+    );
   }
 }

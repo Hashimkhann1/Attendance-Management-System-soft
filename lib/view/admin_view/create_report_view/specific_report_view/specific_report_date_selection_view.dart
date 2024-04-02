@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SpecificReportDateSelectionView extends StatelessWidget {
-  SpecificReportDateSelectionView({super.key});
+  final String? studentName;
+  SpecificReportDateSelectionView({super.key,this.studentName});
 
   // final _formKey  = GlobalKey<FormState>();
   // final reportDescriptionController = TextEditingController();
@@ -60,7 +61,7 @@ class SpecificReportDateSelectionView extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.w600,
               onPressed: () {
-                reportViewModel.checkDatesForSpecificAttendance(context);
+                reportViewModel.checkDatesForSpecificAttendance(context,studentName.toString());
               },
               backgroundColor: MyColors.lightBlackColor,
               width: width * 0.40,
