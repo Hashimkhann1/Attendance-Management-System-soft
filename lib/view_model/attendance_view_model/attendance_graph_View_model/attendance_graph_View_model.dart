@@ -4,6 +4,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 class AttendanceGraphViewModel extends GetxController {
 
@@ -11,8 +12,17 @@ class AttendanceGraphViewModel extends GetxController {
   RxInt totalPresent = 0.obs;
   RxInt totalLeave = 0.obs;
 
+  ////// create report Data /////
+
+  ////// this list holding all attendance //////
   RxList allAttendanceForRepot = [].obs;
+
+  ////// this list holding all attendance dates //////
   RxList allAttendanceDates = [].obs;
+
+  ////// this list holding all attendance //////
+  RxList selectedDatesForSpecificReport = [].obs;
+
 
   void setAttendanceValues(attandancevalues) {
     if(attandancevalues == 'present'){
@@ -29,7 +39,7 @@ class AttendanceGraphViewModel extends GetxController {
       totalPresent.value = 0;
       totalLeave.value = 0;
 
-      var attendanceData = await FirebaseFirestore.instance.collection('users').doc(userId).collection('attendance').get();
+      var attendanceData = await FirebaseFirestore.instance.collection('users').doc(userId).collection('attendance').orderBy('date', descending: true).get();
       if(attendanceData.docs.isNotEmpty){
         allAttendanceDates.clear();
         allAttendanceForRepot.clear();
