@@ -74,6 +74,7 @@ class AllStudentsView extends StatelessWidget {
                                             userRegisterDate: snapshot.data!
                                                 .docs[index]['registerData']
                                                 .toDate(),
+                                            studentName: snapshot.data!.docs[index]['userName'].toString(),
                                           )));
                             },
                             child: snapshot.data!.docs[index]['userEmail']

@@ -1,10 +1,11 @@
 import 'package:attendancemanagementsystem/res/my_colors/my_colors.dart';
 import 'package:attendancemanagementsystem/res/widgets/my_text.dart';
 import 'package:attendancemanagementsystem/view/admin_view/check_student_attendance_view/student_attendance_graph/student_attendance_graph.dart';
-import 'package:attendancemanagementsystem/view/admin_view/make_report_view/make_report_view.dart';
+import 'package:attendancemanagementsystem/view/admin_view/create_report_view/create_report_view.dart';
 import 'package:attendancemanagementsystem/view_model/attendance_view_model/attendance_graph_View_model/attendance_graph_View_model.dart';
 import 'package:attendancemanagementsystem/view_model/attendance_view_model/attendance_view_model.dart';
 import 'package:attendancemanagementsystem/view_model/getx/logedIn_user_data_getx/logedIn_user_data.dart';
+import 'package:attendancemanagementsystem/view_model/report_view_model/report_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,9 +13,10 @@ import 'package:get/get.dart';
 class CheckStudentAttendanceView extends StatefulWidget {
 
   final String studentId;
+  final String? studentName;
   final DateTime userRegisterDate;
 
-  CheckStudentAttendanceView({super.key,required this.studentId , required this.userRegisterDate});
+  CheckStudentAttendanceView({super.key,required this.studentId , required this.userRegisterDate , this.studentName});
 
   @override
   State<CheckStudentAttendanceView> createState() => _CheckStudentAttendanceViewState();}
@@ -24,6 +26,7 @@ class _CheckStudentAttendanceViewState extends State<CheckStudentAttendanceView>
   final LogedInUserDataGetx logedInUserDataGetx = Get.put(LogedInUserDataGetx());
   final AttendanceGraphViewModel attendanceGraphViewModel = Get.put(AttendanceGraphViewModel());
   final AttendanceViewModel attendanceViewModel = Get.put(AttendanceViewModel());
+  final ReportViewModel reportViewModel = ReportViewModel();
 
   @override
   void initState() {
@@ -139,10 +142,13 @@ class _CheckStudentAttendanceViewState extends State<CheckStudentAttendanceView>
                             );
                           }),
                     ),
+
+                    ////////////////////////////////////////////////////
+                    ////////////// create report button ////////////////
                     Obx(() {
                       return attendanceGraphViewModel.totalAttendance == 0 ? SizedBox() : InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => MakeReportView()));
+                          reportViewModel.showBottomSheetForButtons(context , widget.studentName.toString());
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(horizontal: 7,vertical: 7),
@@ -150,7 +156,7 @@ class _CheckStudentAttendanceViewState extends State<CheckStudentAttendanceView>
                               color: MyColors.whiteColor,
                               borderRadius: BorderRadius.circular(8)
                           ),
-                          child: MyText(title: "Make Report",fontSize: 16,fontWeight: FontWeight.w600,),
+                          child: MyText(title: "Create Report",fontSize: 16,fontWeight: FontWeight.w600,),
                         ),
                       );
                     })
