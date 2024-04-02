@@ -222,7 +222,7 @@ class ReportViewModel {
 
 
     }else{
-      Constant().toastMessage("Please select from low date to higher date");
+      Constant().toastMessage("Please select from the lowest date to the highest date.");
     }
 
   }
