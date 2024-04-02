@@ -1,5 +1,4 @@
 import 'package:attendancemanagementsystem/firebase_options.dart';
-import 'package:attendancemanagementsystem/view/auth_view/sign_in_view/sign_in_view.dart';
 import 'package:attendancemanagementsystem/view/splash_view/splash_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

@@ -10,6 +10,7 @@ class MyTextButton extends StatelessWidget {
   final FontWeight? fontWeight;
   final void Function()? onPressed;
   final Color? backgroundColor;
+  final Color? progressIndicatorColor;
   final double? width;
   final double? height;
   final bool loading;
@@ -23,6 +24,7 @@ class MyTextButton extends StatelessWidget {
     this.fontWeight,
     required this.onPressed,
     this.backgroundColor,
+    this.progressIndicatorColor = MyColors.whiteColor,
     this.width,
     this.height,
     this.loading = false,
@@ -41,7 +43,7 @@ class MyTextButton extends StatelessWidget {
             color: backgroundColor,
             borderRadius: BorderRadius.circular(8)
         ),
-        child: loading ? CircularProgressIndicator(color: MyColors.whiteColor,) : MyText(
+        child: loading ? CircularProgressIndicator(color: progressIndicatorColor,) : MyText(
           title: title,
           fontSize: fontSize,
           fontWeight: fontWeight,
