@@ -145,7 +145,7 @@ class _CheckStudentAttendanceViewState extends State<CheckStudentAttendanceView>
 
                     ////////////////////////////////////////////////////
                     ////////////// create report button ////////////////
-                    Obx(() {
+                    logedInUserDataGetx.userDataList[0].userType != 'admin' ? SizedBox() : Obx(() {
                       return attendanceGraphViewModel.totalAttendance == 0 ? SizedBox() : InkWell(
                         onTap: () {
                           reportViewModel.showBottomSheetForButtons(context , widget.studentName.toString());
