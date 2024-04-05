@@ -11,6 +11,7 @@ import 'package:attendancemanagementsystem/view_model/getx/logedIn_user_data_get
 import 'package:attendancemanagementsystem/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ProfileView extends StatelessWidget {
@@ -28,93 +29,99 @@ class ProfileView extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      backgroundColor: MyColors.blackColor,
-      appBar: AppBar(
-        title: MyText(
-          title: "Profile",
-          color: MyColors.whiteColor,
-          fontWeight: FontWeight.w500,
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        SystemNavigator.pop();
+      },
+      child: Scaffold(
         backgroundColor: MyColors.blackColor,
-        shadowColor: MyColors.whiteColor,
-        elevation: 14,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Obx(() {
-                return CircleAvatar(
-                    radius: 66,
-                    backgroundColor: MyColors.lightBlackColor,
-                    backgroundImage: imagePickerGetx
-                            .selectedImagePath.value.isNotEmpty
-                        ? FileImage(File(imagePickerGetx.selectedImagePath.value
-                            .toString())) as ImageProvider
-                        : NetworkImage(logedInUserDataGetx.userDataList[0].userImage != null ? logedInUserDataGetx.userDataList[0].userImage.toString() :
-                            'https://static.vecteezy.com/system/resources/previews/004/641/880/large_2x/illustration-of-high-school-building-school-building-free-vector.jpg'));
-              }),
-              Positioned(
-                bottom: 2,
-                right: 8,
-                child: InkWell(
-                  onTap: () {
-                    imagePickerGetx.getAdminProfileImage();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: MyColors.lightgrayColor, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: MyColors.lightBlackColor,
+        appBar: AppBar(
+          title: MyText(
+            title: "Profile",
+            color: MyColors.whiteColor,
+            fontWeight: FontWeight.w500,
+          ),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          backgroundColor: MyColors.blackColor,
+          shadowColor: MyColors.whiteColor,
+          elevation: 14,
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Obx(() {
+                  return CircleAvatar(
+                      radius: 66,
+                      backgroundColor: MyColors.lightBlackColor,
+                      backgroundImage: imagePickerGetx
+                              .selectedImagePath.value.isNotEmpty
+                          ? FileImage(File(imagePickerGetx.selectedImagePath.value
+                              .toString())) as ImageProvider
+                          : NetworkImage(logedInUserDataGetx.userDataList[0].userImage != null ? logedInUserDataGetx.userDataList[0].userImage.toString() :
+                              'https://static.vecteezy.com/system/resources/previews/004/641/880/large_2x/illustration-of-high-school-building-school-building-free-vector.jpg'));
+                }),
+                Positioned(
+                  bottom: 2,
+                  right: 8,
+                  child: InkWell(
+                    onTap: () {
+                      imagePickerGetx.getAdminProfileImage();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          color: MyColors.lightgrayColor, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: MyColors.lightBlackColor,
+                      ),
                     ),
                   ),
-                ),
+                )
+              ],
+            ),
+            SizedBox(height: height * 0.03,),
+            Obx(() {
+              return imagePickerGetx.selectedImagePath.value != ''
+                  ? MyTextButton(
+                      title: "Update Image",
+                      onPressed: () {
+                        profileViewModel.uploadAdminImage();
+                      },
+                loading: loadingGetx.isLoading.value,
+                backgroundColor: MyColors.lightBlackColor,
+                textColor: MyColors.whiteColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                width: width * 0.36,
+                height: height * 0.06,
               )
-            ],
-          ),
-          SizedBox(height: height * 0.03,),
-          Obx(() {
-            return imagePickerGetx.selectedImagePath.value != ''
-                ? MyTextButton(
-                    title: "Update Image",
-                    onPressed: () {
-                      profileViewModel.uploadAdminImage();
-                    },
-              loading: loadingGetx.isLoading.value,
-              backgroundColor: MyColors.lightBlackColor,
-              textColor: MyColors.whiteColor,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              width: width * 0.36,
+                  : SizedBox();
+            }),
+            SizedBox(
               height: height * 0.06,
-            )
-                : SizedBox();
-          }),
-          SizedBox(
-            height: height * 0.06,
-          ),
-          MyProfileCard(
-              title: logedInUserDataGetx.userDataList[0].userName.toString()),
-          MyProfileCard(
-            title: logedInUserDataGetx.userDataList[0].userEmail.toString(),
-            icon: Icons.email_outlined,
-          ),
-          InkWell(
-              onTap: () {
-                authViewModel.signOut(context);
-              },
-              child: MyProfileCard(
-                title: "Looout",
-                icon: Icons.logout,
-              )),
-        ],
+            ),
+            MyProfileCard(
+                title: logedInUserDataGetx.userDataList[0].userName.toString()),
+            MyProfileCard(
+              title: logedInUserDataGetx.userDataList[0].userEmail.toString(),
+              icon: Icons.email_outlined,
+            ),
+            InkWell(
+                onTap: () {
+                  authViewModel.signOut(context);
+                },
+                child: MyProfileCard(
+                  title: "Looout",
+                  icon: Icons.logout,
+                )),
+          ],
+        ),
       ),
     );
   }
